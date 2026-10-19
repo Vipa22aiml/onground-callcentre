@@ -49,7 +49,9 @@ export async function startAiCall(persona: Persona, target: CallTarget, h: Handl
   }
 
   return {
-    end: () => void client.disconnect(),
+    end: () => {
+      client.disconnect().catch(() => {}) // throws if the mic never started; the call is over either way
+    },
     mute: (on: boolean) => client.enableMic(!on),
   }
 }
