@@ -29,12 +29,22 @@ export default function Recent() {
               <button aria-expanded={open} onClick={() => setOpenId(open ? null : c.id)}>
                 <span className={`call-ico ${c.type}`}><Icon size={14} /></span>
                 <div className="grow">
-                  <div className="title">{c.name}{c.kind && c.kind !== 'human' && <span className="tag-ai">AI</span>}</div>
+                  <div className="title">{c.name}{c.kind && c.kind !== 'human' && <span className="tag-ai">AI</span>}{c.summary && <span className="chip outcome inline">{c.summary.outcome}</span>}</div>
                   <div className="sub">{c.when} · {c.duration ?? '—'}</div>
                 </div>
               </button>
               {open && (
                 <div className="review">
+                  {c.summary && (
+                    <div className="summary-card">
+                      <div className="chips">
+                        <span className="chip outcome">{c.summary.outcome}</span>
+                        <span className={`chip ${c.summary.sentiment}`}>{c.summary.sentiment}</span>
+                      </div>
+                      <p>{c.summary.summary}</p>
+                      <p><b>Next:</b> {c.summary.next_step}</p>
+                    </div>
+                  )}
                   {c.sop && (
                     <div className="sop">
                       {c.sop.map((s) => <span key={s.item} className={s.done ? 'ok' : 'no'}>{s.done ? '✓' : '✗'} {s.item}</span>)}
