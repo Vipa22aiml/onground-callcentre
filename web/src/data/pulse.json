@@ -1,0 +1,111 @@
+{
+ "agents": [
+  {
+   "id": "callcentre-agent",
+   "name": "callcentre-agent",
+   "subtitle": "Call Centre Agent",
+   "group": "role",
+   "color": "#1d4ed8",
+   "unread": 1
+  },
+  {
+   "id": "cross-sell-agent",
+   "name": "cross-sell-agent",
+   "subtitle": "Your Attach rate · 5 members",
+   "group": "task",
+   "color": "#7c3aed",
+   "metric": "24%",
+   "unread": 2
+  },
+  {
+   "id": "sop-agent",
+   "name": "sop-agent",
+   "subtitle": "Your SOP adherence · 5 members",
+   "group": "task",
+   "color": "#0f766e",
+   "metric": "81%",
+   "unread": 1
+  },
+  {
+   "id": "lead-conversion-agent",
+   "name": "lead-conversion-agent",
+   "subtitle": "Lead Conversion Agent",
+   "group": "task",
+   "color": "#b91c1c",
+   "unread": 1
+  },
+  {
+   "id": "capture-agent",
+   "name": "capture-agent",
+   "subtitle": "Your Capture coverage · 5 members",
+   "group": "task",
+   "color": "#047857",
+   "metric": "78%",
+   "unread": 3
+  }
+ ],
+ "channels": [
+  {
+   "id": "callcentre-team",
+   "name": "callcentre-team",
+   "subtitle": "Arvind, Sunita and 6 others"
+  },
+  {
+   "id": "koramangala-store",
+   "name": "koramangala-store",
+   "subtitle": "Store floor and call centre"
+  }
+ ],
+ "kudos": {
+  "count": 3,
+  "quote": "Great work with Mukunda — closed that objection beautifully!",
+  "by": "Sunita Rao",
+  "total": 12
+ },
+ "pinned": {
+  "title": "Confirm the 4:30pm callback",
+  "subtitle": "Priya Iyer · likely billing dispute",
+  "options": [
+   "Confirmed",
+   "Reschedule"
+  ]
+ },
+ "messages": [
+  {
+   "id": "g1",
+   "author": "Sunita Rao",
+   "initials": "SR",
+   "time": "2:05pm",
+   "text": "👥 **STAKEHOLDERS:** @You (Arvind R.), whole call centre shift"
+  },
+  {
+   "id": "g2",
+   "author": "Sunita Rao",
+   "initials": "SR",
+   "time": "2:05pm",
+   "text": "📋 **ISSUE DEFINITION:** Greeting-in-first-10s QA score is at 71% this week, below our 85% target."
+  },
+  {
+   "id": "g3",
+   "author": "Sunita Rao",
+   "initials": "SR",
+   "time": "2:05pm",
+   "text": "➡️ **SUGGESTED RESOLUTION:** Let's push that up 💪 — open every call with the greeting script. I'll check back Friday."
+  },
+  {
+   "id": "g4",
+   "author": "You",
+   "initials": "AR",
+   "time": "2:10pm",
+   "text": "On it! Will make sure I open every call with the greeting script 🙌",
+   "mine": true
+  },
+  {
+   "id": "g5",
+   "author": "Sunita Rao",
+   "initials": "SR",
+   "time": "2:14pm",
+   "text": "Great attitude Arvind 🌟"
+  }
+ ]
+}

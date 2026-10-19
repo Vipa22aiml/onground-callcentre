@@ -1,0 +1,130 @@
+[
+ {
+  "id": "r1",
+  "name": "Mukunda R.",
+  "when": "10:42 AM",
+  "duration": "4m 12s",
+  "type": "outgoing",
+  "sop": [
+   {
+    "item": "Greeting in first 10s",
+    "done": true
+   },
+   {
+    "item": "Confirmed customer need",
+    "done": true
+   },
+   {
+    "item": "Mentioned 100-night trial",
+    "done": false
+   },
+   {
+    "item": "Booked next step",
+    "done": true
+   }
+  ],
+  "transcript": [
+   {
+    "who": "you",
+    "text": "Hi Mukunda, this is Arvind from The Sleep Company. Is this a good time?"
+   },
+   {
+    "who": "them",
+    "text": "Yes, I was about to call you about the EMI."
+   },
+   {
+    "who": "you",
+    "text": "We have 0% EMI for 6 months on the Ortho GRID."
+   },
+   {
+    "who": "them",
+    "text": "Okay, I'll come by on Saturday."
+   }
+  ]
+ },
+ {
+  "id": "r2",
+  "name": "Kavitha R.",
+  "when": "Yesterday",
+  "duration": "2m 05s",
+  "type": "incoming",
+  "sop": [
+   {
+    "item": "Greeting in first 10s",
+    "done": true
+   },
+   {
+    "item": "Confirmed customer need",
+    "done": false
+   },
+   {
+    "item": "Mentioned 100-night trial",
+    "done": false
+   },
+   {
+    "item": "Booked next step",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "r3",
+  "name": "Unknown",
+  "when": "Yesterday",
+  "duration": null,
+  "type": "missed"
+ },
+ {
+  "id": "r4",
+  "name": "Ritu S.",
+  "when": "Today 11:20 AM",
+  "duration": null,
+  "type": "missed"
+ },
+ {
+  "id": "r5",
+  "name": "Faizan A.",
+  "when": "Today 10:05 AM",
+  "duration": null,
+  "type": "missed"
+ },
+ {
+  "id": "r6",
+  "name": "Kavitha R.",
+  "when": "Yesterday 4:40 PM",
+  "duration": null,
+  "type": "missed"
+ },
+ {
+  "id": "r7",
+  "name": "Divya P.",
+  "when": "Yesterday 2:15 PM",
+  "duration": null,
+  "type": "missed"
+ },
+ {
+  "id": "r8",
+  "name": "Faizan A.",
+  "when": "Mon",
+  "duration": "6m 40s",
+  "type": "incoming",
+  "sop": [
+   {
+    "item": "Greeting in first 10s",
+    "done": true
+   },
+   {
+    "item": "Confirmed customer need",
+    "done": true
+   },
+   {
+    "item": "Mentioned 100-night trial",
+    "done": true
+   },
+   {
+    "item": "Booked next step",
+    "done": false
+   }
+  ]
+ }
+]

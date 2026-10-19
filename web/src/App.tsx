@@ -1,16 +1,31 @@
-import { useRef, useState } from 'react'
-import { startAiCall, type Line } from './calling/aiCall'
+import { Route, Routes } from 'react-router-dom'
+import Shell from './components/Shell'
+import { CallProvider } from './calling/CallContext'
+import Dashboard from './pages/Dashboard'
+import CallsToMake from './pages/CallsToMake'
+import Incoming from './pages/Incoming'
+import Recent from './pages/Recent'
+import Practise from './pages/Practise'
+import Calendar from './pages/Calendar'
+import PulseHome from './pages/PulseHome'
+import Channel from './pages/Channel'
+import Softphone from './pages/Softphone'
 
 export default function App() {
-  const [status, setStatus] = useState('idle')
-  const [lines, setLines] = useState<Line[]>([])
-  const hangup = useRef<() => void>(undefined)
   return (
-    <div style={{ padding: 24 }}>
-      <p id="status">{status}</p>
-      <button id="start" onClick={async () => { hangup.current = await startAiCall('telecaller', 'Mukunda', { onLine: (l) => setLines((x) => [...x, l]), onStatus: setStatus }) }}>Call</button>
-      <button id="end" onClick={() => hangup.current?.()}>End</button>
-      <ul id="lines">{lines.map((l, i) => <li key={i}>{l.who}: {l.text}</li>)}</ul>
-    </div>
+    <Routes>
+      <Route path="/phone" element={<Softphone />} />
+      <Route element={<CallProvider><Shell /></CallProvider>}>
+        <Route index element={<Dashboard />} />
+        <Route path="plan/calls" element={<CallsToMake />} />
+        <Route path="plan/incoming" element={<Incoming />} />
+        <Route path="plan/recent" element={<Recent />} />
+        <Route path="plan/practise" element={<Practise />} />
+        <Route path="calendar" element={<Calendar />} />
+        <Route path="pulse" element={<PulseHome />} />
+        <Route path="pulse/:id" element={<Channel />} />
+        <Route path="*" element={<Dashboard />} />
+      </Route>
+    </Routes>
   )
 }

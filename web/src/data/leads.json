@@ -1,0 +1,271 @@
+[
+ {
+  "id": "l1",
+  "name": "Mukunda",
+  "initials": "MK",
+  "product": "Ortho GRID",
+  "price": 8490,
+  "score": 90,
+  "icp": 87,
+  "intent": 91,
+  "slaLeft": "2h left",
+  "nextAction": "Quote to be given to customer",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 82
+   },
+   {
+    "label": "Product fit",
+    "value": 94
+   },
+   {
+    "label": "Location (Koramangala)",
+    "value": 90
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 80
+   }
+  ],
+  "history": [
+   "Walked in Sat 4:10 PM, tried Ortho GRID for 12 min",
+   "Asked floor staff about EMI",
+   "Left number at billing desk, no purchase",
+   "Lead created by store, sent to call centre"
+  ],
+  "signals": [
+   {
+    "kind": "financing",
+    "title": "Financing Related",
+    "note": "Asked specifically about EMI options on the Ortho GRID — budget is a live concern, not a blocker"
+   },
+   {
+    "kind": "quotation",
+    "title": "Quotation Demanded",
+    "note": "Compared pricing with a competitor before reaching out — price-anchored, expects a competitive number"
+   },
+   {
+    "kind": "warranty",
+    "title": "Warranty Related",
+    "note": "Hasn't raised this yet — worth proactively mentioning the 100-night trial to reduce perceived risk"
+   }
+  ],
+  "missed": 2
+ },
+ {
+  "id": "l2",
+  "name": "Ritu S.",
+  "initials": "RS",
+  "product": "Smart Luxe Mattress",
+  "price": 13390,
+  "score": 96,
+  "icp": 92,
+  "intent": 88,
+  "slaLeft": "5h left",
+  "nextAction": "Book a second store visit",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 95
+   },
+   {
+    "label": "Product fit",
+    "value": 90
+   },
+   {
+    "label": "Location (HSR)",
+    "value": 88
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 94
+   }
+  ],
+  "history": [
+   "Visited with spouse Sun 11:20 AM",
+   "Spent 25 min on Smart Luxe",
+   "Asked about delivery this week"
+  ],
+  "signals": [
+   {
+    "kind": "delivery",
+    "title": "Delivery Related",
+    "note": "Wants delivery before a family visit on the 28th — urgency is real"
+   },
+   {
+    "kind": "quotation",
+    "title": "Quotation Demanded",
+    "note": "Asked for a written quote to share with spouse"
+   }
+  ],
+  "missed": 0
+ },
+ {
+  "id": "l3",
+  "name": "Faizan A.",
+  "initials": "FA",
+  "product": "Luxe Recliner Sofa",
+  "price": 24990,
+  "score": 84,
+  "icp": 78,
+  "intent": 80,
+  "slaLeft": "1d left",
+  "nextAction": "Share fabric swatches on WhatsApp",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 70
+   },
+   {
+    "label": "Product fit",
+    "value": 85
+   },
+   {
+    "label": "Location (Indiranagar)",
+    "value": 82
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 75
+   }
+  ],
+  "history": [
+   "Called store Today 10:05 AM, missed",
+   "Visited last Tuesday"
+  ],
+  "signals": [
+   {
+    "kind": "financing",
+    "title": "Financing Related",
+    "note": "Asked if no-cost EMI applies to sofas"
+   }
+  ],
+  "missed": 1
+ },
+ {
+  "id": "l4",
+  "name": "Kavitha R.",
+  "initials": "KR",
+  "product": "Smart Grid Pillow Set",
+  "price": 24990,
+  "score": 79,
+  "icp": 74,
+  "intent": 72,
+  "slaLeft": "1d left",
+  "nextAction": "Call back about bulk order",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 76
+   },
+   {
+    "label": "Product fit",
+    "value": 70
+   },
+   {
+    "label": "Location (Whitefield)",
+    "value": 78
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 72
+   }
+  ],
+  "history": [
+   "Missed call Yesterday 4:40 PM",
+   "Warm lead from Instagram ad"
+  ],
+  "signals": [
+   {
+    "kind": "quotation",
+    "title": "Quotation Demanded",
+    "note": "Wants pricing for 6 pillow sets for a guest house"
+   }
+  ],
+  "missed": 1
+ },
+ {
+  "id": "l5",
+  "name": "Divya P.",
+  "initials": "DP",
+  "product": "Ortho GRID",
+  "price": 18490,
+  "score": 71,
+  "icp": 65,
+  "intent": 58,
+  "slaLeft": "2d left",
+  "nextAction": "Re-engage with trial offer",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 60
+   },
+   {
+    "label": "Product fit",
+    "value": 72
+   },
+   {
+    "label": "Location (JP Nagar)",
+    "value": 66
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 55
+   }
+  ],
+  "history": [
+   "Missed call Yesterday 2:15 PM",
+   "Cold lead, visited a month ago"
+  ],
+  "signals": [
+   {
+    "kind": "warranty",
+    "title": "Warranty Related",
+    "note": "Worried a firm mattress won't suit back pain — the trial answers this"
+   }
+  ],
+  "missed": 3
+ },
+ {
+  "id": "l6",
+  "name": "Arjun M.",
+  "initials": "AM",
+  "product": "Smart Bed Frame",
+  "price": 32990,
+  "score": 66,
+  "icp": 60,
+  "intent": 61,
+  "slaLeft": "3d left",
+  "nextAction": "Send assembly video",
+  "icpBreakdown": [
+   {
+    "label": "Budget fit",
+    "value": 58
+   },
+   {
+    "label": "Product fit",
+    "value": 66
+   },
+   {
+    "label": "Location (Hebbal)",
+    "value": 60
+   },
+   {
+    "label": "Timeline < 2 weeks",
+    "value": 56
+   }
+  ],
+  "history": [
+   "Browsed online, booked a store visit"
+  ],
+  "signals": [
+   {
+    "kind": "delivery",
+    "title": "Delivery Related",
+    "note": "Lives in a 4th-floor walk-up, asked about assembly"
+   }
+  ],
+  "missed": 0
+ }
+]

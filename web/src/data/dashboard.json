@@ -1,0 +1,147 @@
+{
+ "agent": {
+  "name": "Arvind Rajan",
+  "initials": "AR",
+  "org": "The Sleep Company · Call Centre",
+  "score": 76,
+  "rank": 3
+ },
+ "kpis": [
+  {
+   "label": "OG Score™",
+   "value": "76",
+   "delta": "▲13",
+   "tone": "up"
+  },
+  {
+   "label": "Avg handle time",
+   "value": "4m 12s",
+   "delta": "▼8%",
+   "tone": "up"
+  },
+  {
+   "label": "CSAT today",
+   "value": "94%",
+   "delta": "▲2pt",
+   "tone": "up"
+  },
+  {
+   "label": "In queue",
+   "value": "2",
+   "delta": "● live",
+   "tone": "live"
+  }
+ ],
+ "progress": [
+  {
+   "label": "Leads Created",
+   "value": 3,
+   "delta": "+1"
+  },
+  {
+   "label": "Leads Called",
+   "value": 2,
+   "delta": "+2"
+  }
+ ],
+ "earnings": {
+  "total": 5200,
+  "coached": 1700,
+  "min": 800,
+  "max": 6000
+ },
+ "waiting": [
+  {
+   "name": "Priya Iyer",
+   "reason": "Likely billing dispute — flagged before",
+   "wait": "4m 20s",
+   "tone": "hot"
+  },
+  {
+   "name": "Suresh Nair",
+   "reason": "Plan upgrade enquiry",
+   "wait": "1m 50s",
+   "tone": "warm"
+  }
+ ],
+ "tasks": [
+  {
+   "id": "t1",
+   "icon": "callback",
+   "label": "2 callbacks",
+   "hint": "next 4:30pm"
+  },
+  {
+   "id": "t2",
+   "icon": "hot",
+   "label": "2 hot leads",
+   "hint": "untouched 24h"
+  },
+  {
+   "id": "t3",
+   "icon": "outcome",
+   "label": "1 outcome",
+   "hint": "to log"
+  }
+ ],
+ "calls7": [
+  {
+   "day": "Mon",
+   "v": 18
+  },
+  {
+   "day": "Tue",
+   "v": 22
+  },
+  {
+   "day": "Wed",
+   "v": 15
+  },
+  {
+   "day": "Thu",
+   "v": 26
+  },
+  {
+   "day": "Fri",
+   "v": 20
+  },
+  {
+   "day": "Sat",
+   "v": 12
+  },
+  {
+   "day": "Today",
+   "v": 14
+  }
+ ],
+ "csat7": [
+  {
+   "day": "Mon",
+   "v": 88
+  },
+  {
+   "day": "Tue",
+   "v": 90
+  },
+  {
+   "day": "Wed",
+   "v": 85
+  },
+  {
+   "day": "Thu",
+   "v": 92
+  },
+  {
+   "day": "Fri",
+   "v": 89
+  },
+  {
+   "day": "Sat",
+   "v": 91
+  },
+  {
+   "day": "Today",
+   "v": 94
+  }
+ ]
+}

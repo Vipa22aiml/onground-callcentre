@@ -1,0 +1,32 @@
+[
+ {
+  "date": "2026-10-21",
+  "time": "11:00",
+  "title": "Coaching: objection handling with Sunita",
+  "kind": "coaching"
+ },
+ {
+  "date": "2026-10-23",
+  "time": "16:30",
+  "title": "Store visit: Mukunda (Ortho GRID)",
+  "kind": "visit"
+ },
+ {
+  "date": "2026-10-26",
+  "time": "10:00",
+  "title": "Weekly call-centre review",
+  "kind": "meeting"
+ },
+ {
+  "date": "2026-10-28",
+  "time": "15:00",
+  "title": "Store visit: Ritu S. + spouse",
+  "kind": "visit"
+ },
+ {
+  "date": "2026-11-04",
+  "time": "12:00",
+  "title": "QA calibration session",
+  "kind": "coaching"
+ }
+]
