@@ -1,0 +1,22 @@
+# Render Blueprint for the voice AI call server. Keys are entered in the Render dashboard
+# (sync: false), never committed.
+services:
+  - type: web
+    name: onground-call-server
+    runtime: docker
+    rootDir: call-server
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: MAX_CALL_SECS
+        value: "180"
+      - key: MAX_CONCURRENT_CALLS
+        value: "3"
+      - key: CALLS_PER_IP_PER_HOUR
+        value: "10"

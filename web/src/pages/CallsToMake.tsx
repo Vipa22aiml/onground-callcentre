@@ -42,8 +42,8 @@ export default function CallsToMake() {
                   <div className="next-action" style={{ justifySelf: 'start' }}>{lead.nextAction} · {lead.slaLeft}</div>
                   <ul>{lead.signals.map((s) => <li key={s.title}><b>{s.title}:</b> {s.note}</li>)}</ul>
                   <div className="actions">
-                    <button className="btn primary small" onClick={() => callHuman(lead.name)}><Phone size={12} />Call now</button>
-                    <button className="btn purple small" onClick={() => startAi('telecaller', lead.name)}><Bot size={12} />Let AI call</button>
+                    <button className="btn primary small" onClick={() => callHuman(lead)}><Phone size={12} />Call now</button>
+                    <button className="btn purple small" onClick={() => startAi('telecaller', lead)}><Bot size={12} />Let AI call</button>
                     <button className="btn small" onClick={() => setModalAt(leads.indexOf(lead))}><UserRound size={12} />Full picture</button>
                   </div>
                 </div>

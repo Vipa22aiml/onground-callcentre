@@ -27,6 +27,13 @@ export type MissedCall = {
 
 export type Line = { who: 'you' | 'ai' | 'them'; text: string }
 
+export type CallSummary = {
+  summary: string
+  outcome: string
+  next_step: string
+  sentiment: 'positive' | 'neutral' | 'negative'
+}
+
 export type RecentCall = {
   id: string
   name: string
@@ -36,6 +43,7 @@ export type RecentCall = {
   kind?: 'ai' | 'human' | 'practice'
   transcript?: Line[]
   sop?: { item: string; done: boolean }[]
+  summary?: CallSummary
 }
 
 export type CalEvent = { date: string; time: string; title: string; kind: 'visit' | 'coaching' | 'meeting' }

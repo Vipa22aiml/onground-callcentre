@@ -3,7 +3,7 @@ import type Peer from 'peerjs'
 import type { MediaConnection } from 'peerjs'
 import type { RecentCall } from '../types'
 import { CallCtx, type ActiveCall, type CallApi } from './useCalls'
-import { startAiCall } from './aiCall'
+import { CALL_SERVER, startAiCall, summarize } from './aiCall'
 import { answer, dial, openLine, peerId } from './peerCall'
 
 const fmtDuration = (ms: number) => `${Math.floor(ms / 60000)}m ${String(Math.round(ms / 1000) % 60).padStart(2, '0')}s`
@@ -22,16 +22,19 @@ export function CallProvider({ children }: { children: ReactNode }) {
 
   const update = (patch: Partial<ActiveCall>) => setActive((a) => (a ? { ...a, ...patch } : a))
 
-  // A call ended (either side): log it, then clear the call bar after a moment.
+  // A call ended (either side): log it. AI calls with a transcript stay open to show the AI
+  // summary; other calls clear the call panel after a moment.
   const finish = useCallback(() => {
     const a = activeRef.current
     controls.current = null
     if (!a || a.status === 'ended') return
     activeRef.current = { ...a, status: 'ended' } // several end events can fire in one tick; log once
     if (a.status === 'failed') return setActive(null)
+
+    const id = `c${Date.now()}`
     setLog((l) => [
       {
-        id: `c${Date.now()}`,
+        id,
         name: a.kind === 'practice' ? `Practice: ${a.name}` : a.name,
         when: `Today ${nowLabel()}`,
         duration: a.startedAt ? fmtDuration(Date.now() - a.startedAt) : null,
@@ -41,8 +44,24 @@ export function CallProvider({ children }: { children: ReactNode }) {
       },
       ...l,
     ])
-    update({ status: 'ended' })
-    setTimeout(() => setActive((x) => (x?.status === 'ended' ? null : x)), 1500)
+    update({ status: 'ended', speaking: null })
+
+    if (a.kind === 'human' || a.lines.length === 0) {
+      setTimeout(() => setActive((x) => (x?.status === 'ended' ? null : x)), 1500)
+      return
+    }
+    update({ summary: 'loading' })
+    summarize(a.name, a.kind === 'practice' ? 'practice' : 'AI tele-caller', a.lines)
+      .then((summary) => {
+        update({ summary })
+        setLog((l) => l.map((c) => (c.id === id ? { ...c, summary } : c)))
+      })
+      .catch(() => update({ summary: 'failed' }))
+  }, [])
+
+  // Free hosting sleeps when idle; wake the call server as soon as the app opens.
+  useEffect(() => {
+    fetch(CALL_SERVER).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -56,9 +75,9 @@ export function CallProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const begin = (call: Omit<ActiveCall, 'lines' | 'muted'>) => {
+  const begin = (call: Omit<ActiveCall, 'lines' | 'muted' | 'speaking'>) => {
     controls.current?.end()
-    setActive({ ...call, lines: [], muted: false })
+    setActive({ ...call, lines: [], muted: false, speaking: null })
   }
 
   const fail = (e: unknown) => update({ status: 'failed', error: e instanceof Error ? e.message : String(e) })
@@ -67,18 +86,19 @@ export function CallProvider({ children }: { children: ReactNode }) {
     active,
     incoming,
     log,
-    startAi: (persona, name) => {
-      begin({ name, kind: persona === 'shopper' ? 'practice' : 'ai', direction: 'outgoing', status: 'connecting' })
-      startAiCall(persona, name, {
+    startAi: (persona, target) => {
+      begin({ ...target, kind: persona === 'shopper' ? 'practice' : 'ai', direction: 'outgoing', status: 'connecting' })
+      startAiCall(persona, target, {
         onLine: (line) => setActive((a) => (a ? { ...a, lines: [...a.lines, line] } : a)),
         onStatus: (s) => (s === 'live' ? update({ status: 'live', startedAt: Date.now() }) : s === 'ended' && finish()),
+        onSpeaking: (speaking) => update({ speaking }),
       })
         .then((c) => (controls.current = c))
         .catch(fail)
     },
-    callHuman: (name) => {
+    callHuman: (target) => {
       if (!peer.current) return
-      begin({ name, kind: 'human', direction: 'outgoing', status: 'ringing' })
+      begin({ ...target, kind: 'human', direction: 'outgoing', status: 'ringing' })
       dial(peer.current, peerId('phone'), finish)
         .then((c) => {
           controls.current = c
@@ -103,6 +123,7 @@ export function CallProvider({ children }: { children: ReactNode }) {
       setIncoming(null)
     },
     hangup: () => {
+      if (activeRef.current?.status === 'ended') return setActive(null) // closing the summary card
       if (controls.current) controls.current.end()
       else setActive(null)
       finish()

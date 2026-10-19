@@ -6,7 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "certifi>=2026.10.18",
     "fastapi>=0.146.0",
-    "pipecat-ai[google,sarvam,silero,webrtc]>=1.13.0",
+    "pipecat-ai[google,sarvam,silero,websocket]>=1.13.0",
     "python-dotenv>=1.2.4",
     "uvicorn>=0.54.0",
 ]

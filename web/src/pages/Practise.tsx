@@ -1,6 +1,10 @@
 import { Bot, Mic } from 'lucide-react'
 import PlannerHead from '../components/PlannerHead'
+import leadsData from '../data/leads.json'
 import { useCalls } from '../calling/useCalls'
+import type { Lead } from '../types'
+
+const mukunda = (leadsData as Lead[])[0]
 
 export default function Practise() {
   const { startAi, active } = useCalls()
@@ -23,10 +27,10 @@ export default function Practise() {
           <ul>
             <li>Will ask about EMI and quote a cheaper competitor.</li>
             <li>Agrees to visit only if you handle the objections well.</li>
-            <li>Speaks English, Hindi or Kannada — reply in any of them.</li>
+            <li>Speaks English or Hindi — reply in either.</li>
           </ul>
           <div>
-            <button className="btn purple" disabled={!!active} onClick={() => startAi('shopper', 'Mukunda')}>
+            <button className="btn purple" disabled={!!active} onClick={() => startAi('shopper', mukunda)}>
               <Mic size={13} />Start practice call
             </button>
           </div>

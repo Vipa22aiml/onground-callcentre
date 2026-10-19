@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@pipecat-ai/client-js": "^1.14.0",
-    "@pipecat-ai/small-webrtc-transport": "^1.11.0",
+    "@pipecat-ai/websocket-transport": "^1.8.0",
     "lucide-react": "^1.59.0",
     "peerjs": "^1.5.5",
     "react": "^19.2.8",

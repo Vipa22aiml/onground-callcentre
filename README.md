@@ -3,7 +3,8 @@
 A working rebuild of the On-Ground call-centre app: the screens from the mock, plus **real calling**.
 
 - **Human to human:** the agent desk calls a customer's phone (a browser softphone), and the customer can call the desk.
-- **AI to human:** an AI tele-caller ("Avani") calls you and holds a live voice conversation in English, Hindi or Kannada. "Practise a call" flips it so the AI plays a hard-to-close shopper.
+- **AI to human:** an AI tele-caller ("Avani") calls you about the lead's product and holds a live voice conversation in English or Hindi. "Practise a call" flips it so the AI plays a hard-to-close shopper. After every AI call, Gemini writes a summary with outcome, sentiment and next step.
+- **No keys needed to try it:** the hosted call server holds the API keys. The browser never sees them.
 
 Demo video: _add link_ · Live site: _add link_
 
@@ -31,14 +32,27 @@ Human-to-human calls need no server: open the softphone link shown under the shi
 |---|---|---|
 | **In-app call**, **Call back**, **Call now** | Agent (browser) and customer (softphone) | Browser-to-browser WebRTC with [PeerJS](https://peerjs.com). PeerJS's free cloud server only relays the handshake; audio flows peer to peer. The desk and the softphone share a short room code, so each knows the other's peer id. |
 | Softphone **call button** | Customer calls the desk | Same path in reverse. The desk shows an Answer/Decline card. |
-| **Phone call**, **Let AI call** | AI tele-caller and you | Browser mic to `call-server` over WebRTC. [Pipecat](https://github.com/pipecat-ai/pipecat) runs the loop: Sarvam **Saarika** speech-to-text, then **Gemini** for the reply, then Sarvam **Bulbul** text-to-speech, with Silero VAD so you can interrupt the bot mid-sentence. |
+| **Phone call**, **Let AI call** | AI tele-caller and you | Browser mic streams to `call-server` over a WebSocket (Pipecat's protobuf serializer; Daily's audio engine gives echo cancellation). [Pipecat](https://github.com/pipecat-ai/pipecat) runs the loop: Sarvam **Saarika** speech-to-text, then **Gemini** for the reply, then Sarvam **Bulbul** text-to-speech, with Silero VAD so you can interrupt the bot mid-sentence. The call card shows live captions and who is speaking. |
 | **Practise a call** | You and an AI shopper | Same pipeline with a different persona: a price-sensitive shopper who asks about EMI and quotes a competitor. |
 
-Every finished call lands in **Recent** with its duration and, for AI calls, the full transcript.
+Every finished call lands in **Recent** with its duration and, for AI calls, the full transcript and the AI summary (`POST /api/summary`).
+
+**Why WebSocket rather than WebRTC for the AI leg:** WebRTC media needs UDP, which free hosts don't offer without a TURN server. A WebSocket runs on any HTTPS host, so the AI call works from the deployed site.
 
 **Why there is a small server despite the "no backend" rule:** all app data is local JSON (`web/src/data`). The only server is `call-server`, because speech-to-text, the LLM and text-to-speech need API keys that must never ship to a browser. It stores nothing.
 
+**Keeping the shared keys safe on a public demo:** the keys are server environment secrets (never in the repo or the bundle). The server also enforces:
+- an origin allowlist (`ALLOWED_ORIGINS`), so other sites can't use it;
+- 3 concurrent AI calls at most;
+- 10 calls per IP per hour, and 30 summaries;
+- a 3-minute cap per call.
+
 **Why not a phone network (Twilio/Exotel):** a Twilio trial can only call verified numbers and adds a trial message, and Exotel/Plivo need business KYC. Browser calling shows the same product flow without those limits. Swapping in a phone number later means changing only Pipecat's transport (its Twilio serializer); the pipeline stays the same.
+
+## Deploy
+
+- **Call server → Render** (free, Docker): New → Blueprint → this repo. `render.yaml` sets it up; enter `SARVAM_API_KEY`, `GEMINI_API_KEY` and `ALLOWED_ORIGINS` (your Vercel URL) in the dashboard. The free tier sleeps after 15 idle minutes; the app pings it on load, and the first call after a sleep can take about a minute.
+- **App → Vercel:** import the repo, root directory `web`, and set `VITE_CALL_SERVER` to the Render URL.
 
 ## Stack and why
 
@@ -53,7 +67,8 @@ web/src
   components/   Shell (sidebar, top bar) · CallDock · DemoStrip · LeadsModal · PlannerHead
   pages/        Dashboard · CallsToMake · Incoming · Recent · Practise · Calendar · PulseHome · Channel · Softphone
   data/         sample JSON
-call-server/server.py   FastAPI + Pipecat voice bot
+call-server/server.py   FastAPI + Pipecat voice bot, AI summaries, abuse limits
+render.yaml             Render blueprint for the call server
 ```
 
 ## Done and skipped
@@ -78,6 +93,7 @@ call-server/server.py   FastAPI + Pipecat voice bot
 **Skipped or simplified:**
 - Data resets on reload, because there is no backend by design.
 - AvaniBot's "Ask a question" does not call an LLM; the daily brief is canned.
+- AI calls speak English and Hindi. Kannada needs the TTS language switched mid-call, which is left for later.
 - The PeerJS public signalling server is fine for a demo. Production would self-host it and add a TURN server for strict networks.
 
 ## AI tools used
