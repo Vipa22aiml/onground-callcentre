@@ -2,13 +2,14 @@
 
 POST /api/offer?persona=shopper|telecaller&lead=<name>   WebRTC offer from the browser
 PATCH /api/offer                                         trickle ICE candidates
-GET  /api/calls                                          transcripts of finished AI calls
 """
 
-import asyncio
 import os
-import time
-import uuid
+
+import certifi
+
+# python.org builds of Python ship without CA certificates; Sarvam's websockets need them
+os.environ.setdefault("SSL_CERT_FILE", certifi.where())
 
 from dotenv import load_dotenv
 from fastapi import BackgroundTasks, FastAPI, Request
@@ -68,7 +69,6 @@ PERSONAS = {
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 webrtc = SmallWebRTCRequestHandler()
-calls: list[dict] = []  # ponytail: in-memory call log, resets on restart; fine for a demo
 
 
 async def run_bot(conn: SmallWebRTCConnection, persona: str, lead: str):
@@ -88,8 +88,8 @@ async def run_bot(conn: SmallWebRTCConnection, persona: str, lead: str):
     llm = GoogleLLMService(
         api_key=os.environ["GEMINI_API_KEY"],
         settings=GoogleLLMService.Settings(
-            model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
-            thinking=GoogleLLMService.ThinkingConfig(thinking_budget=0),  # phone calls need speed
+            model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite"),
+            thinking=GoogleLLMService.ThinkingConfig(thinking_level="minimal"),  # phone calls need speed
             system_instruction=PERSONAS[persona].format(lead=lead) + " " + LANGUAGE_RULE,
         ),
     )
@@ -102,7 +102,6 @@ async def run_bot(conn: SmallWebRTCConnection, persona: str, lead: str):
         [transport.input(), stt, agg.user(), llm, tts, transport.output(), agg.assistant()]
     )
     task = PipelineTask(pipeline, params=PipelineParams(enable_metrics=True))
-    record = {"id": uuid.uuid4().hex[:8], "persona": persona, "lead": lead, "started": time.time()}
 
     @transport.event_handler("on_client_connected")
     async def on_connected(_transport, _client):
@@ -112,13 +111,6 @@ async def run_bot(conn: SmallWebRTCConnection, persona: str, lead: str):
 
     @transport.event_handler("on_client_disconnected")
     async def on_disconnected(_transport, _client):
-        record["ended"] = time.time()
-        record["messages"] = [
-            {"role": m["role"], "text": m["content"]}
-            for m in context.get_messages()
-            if isinstance(m.get("content"), str) and not m["content"].startswith("(")
-        ]
-        calls.insert(0, record)
         await task.cancel()
 
     await PipelineRunner(handle_sigint=False).run(task)
@@ -142,11 +134,6 @@ async def ice(request: Request):
     candidates = [IceCandidate(**c) for c in body.get("candidates", [])]
     await webrtc.handle_patch_request(SmallWebRTCPatchRequest(pc_id=body["pc_id"], candidates=candidates))
     return {"status": "ok"}
-
-
-@app.get("/api/calls")
-async def list_calls():
-    return calls
 
 
 @app.on_event("shutdown")
