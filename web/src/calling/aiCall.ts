@@ -3,6 +3,8 @@ import { ProtobufFrameSerializer, WebSocketTransport } from '@pipecat-ai/websock
 import type { CallSummary, Line } from '../types'
 
 export const CALL_SERVER = import.meta.env.VITE_CALL_SERVER ?? 'http://localhost:7860'
+// Tunnels like ngrok put a warning page in front of browser requests unless this header is sent.
+export const SERVER_HEADERS = { 'ngrok-skip-browser-warning': '1' }
 
 export type Persona = 'shopper' | 'telecaller'
 export type CallTarget = { name: string; product?: string; price?: number }
@@ -60,7 +62,7 @@ export async function startAiCall(persona: Persona, target: CallTarget, h: Handl
 export async function summarize(lead: string, kind: string, lines: Line[]): Promise<CallSummary> {
   const res = await fetch(`${CALL_SERVER}/api/summary`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...SERVER_HEADERS, 'Content-Type': 'application/json' },
     body: JSON.stringify({ lead, kind, lines: lines.slice(-80) }),
   })
   if (!res.ok) throw new Error(`Summary failed (${res.status})`)

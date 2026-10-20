@@ -3,7 +3,7 @@ import type Peer from 'peerjs'
 import type { MediaConnection } from 'peerjs'
 import type { RecentCall } from '../types'
 import { CallCtx, type ActiveCall, type CallApi } from './useCalls'
-import { CALL_SERVER, startAiCall, summarize } from './aiCall'
+import { CALL_SERVER, SERVER_HEADERS, startAiCall, summarize } from './aiCall'
 import { answer, dial, openLine, peerId } from './peerCall'
 
 const fmtDuration = (ms: number) => `${Math.floor(ms / 60000)}m ${String(Math.round(ms / 1000) % 60).padStart(2, '0')}s`
@@ -61,7 +61,7 @@ export function CallProvider({ children }: { children: ReactNode }) {
 
   // Free hosting sleeps when idle; wake the call server as soon as the app opens.
   useEffect(() => {
-    fetch(CALL_SERVER).catch(() => {})
+    fetch(CALL_SERVER, { headers: SERVER_HEADERS }).catch(() => {})
   }, [])
 
   useEffect(() => {

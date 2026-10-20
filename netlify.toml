@@ -1,0 +1,11 @@
+# Netlify hosts the React app. The AI call server runs elsewhere (Render, or a tunnel);
+# set VITE_CALL_SERVER to its https URL in the build environment.
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
