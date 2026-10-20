@@ -79,7 +79,7 @@ export default function CallDock() {
     failed: active.error ?? 'Call failed',
   }[active.status]
   const hint =
-    active.status !== 'live' ? '' : active.speaking === 'ai' ? `${other} is speaking` : active.speaking === 'you' ? 'You are speaking' : 'Listening…'
+    active.status !== 'live' ? '' : active.speaking ? { ai: `${other} is speaking`, you: 'You are speaking', thinking: `${other} is thinking…` }[active.speaking] : 'Listening…'
 
   return (
     <div className={isAi ? 'dock ai' : 'dock human'} aria-live="polite">
@@ -105,7 +105,7 @@ export default function CallDock() {
       )}
 
       {active.status === 'live' && (
-        <div className="meter"><Voice on={!!active.speaking} />{hint}</div>
+        <div className="meter"><Voice on={active.speaking === 'ai' || active.speaking === 'you'} />{hint}</div>
       )}
 
       {active.lines.length > 0 && (

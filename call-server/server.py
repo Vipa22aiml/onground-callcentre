@@ -25,7 +25,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from google import genai
 from loguru import logger
 from pipecat.audio.vad.silero import SileroVADAnalyzer
-from pipecat.frames.frames import LLMRunFrame
+from pipecat.frames.frames import TTSSpeakFrame
 from pipecat.pipeline.pipeline import Pipeline
 from pipecat.pipeline.runner import PipelineRunner
 from pipecat.pipeline.task import PipelineParams, PipelineTask
@@ -123,11 +123,11 @@ async def call(ws: WebSocket, persona: str = "telecaller", lead: str = "", produ
     await ws.accept()
 
     persona = persona if persona in PERSONAS else "telecaller"
-    prompt = PERSONAS[persona].format(
-        lead=clean(lead, "the customer"),
-        product=clean(product, "Ortho GRID mattress"),
-        price=clean(price, "Rs 8,490", 20),
-    )
+    lead, product = clean(lead, "there"), clean(product, "Ortho GRID mattress")
+    prompt = PERSONAS[persona].format(lead=lead, product=product, price=clean(price, "Rs 8,490", 20))
+    # Scripted opening, spoken straight away: the free-tier LLM can take several seconds to answer,
+    # and silence at the start of a call sounds broken.
+    greeting = f"Hi {lead.split()[0]}, this is Avani from The Sleep Company. I saw you checked out the {product} at our store. Do you have a minute?"
 
     transport = FastAPIWebsocketTransport(
         websocket=ws,
@@ -171,8 +171,7 @@ async def call(ws: WebSocket, persona: str = "telecaller", lead: str = "", produ
     @transport.event_handler("on_client_connected")
     async def on_connected(_transport, _client):
         if persona == "telecaller":  # the caller speaks first
-            context.add_message({"role": "user", "content": "(The call connects. Start the call.)"})
-            await task.queue_frames([LLMRunFrame()])
+            await task.queue_frames([TTSSpeakFrame(greeting, append_to_context=True)])
 
     @transport.event_handler("on_client_disconnected")
     async def on_disconnected(_transport, _client):

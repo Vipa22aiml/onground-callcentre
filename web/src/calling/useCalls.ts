@@ -11,7 +11,7 @@ export type ActiveCall = CallTarget & {
   lines: Line[]
   startedAt?: number
   muted: boolean
-  speaking: 'you' | 'ai' | null
+  speaking: 'you' | 'ai' | 'thinking' | null
   summary?: CallSummary | 'loading' | 'failed'
   error?: string
 }

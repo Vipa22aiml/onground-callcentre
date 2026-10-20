@@ -12,7 +12,7 @@ export type CallTarget = { name: string; product?: string; price?: number }
 type Handlers = {
   onLine: (line: Line) => void
   onStatus: (status: 'connecting' | 'live' | 'ended') => void
-  onSpeaking: (who: 'you' | 'ai' | null) => void
+  onSpeaking: (who: 'you' | 'ai' | 'thinking' | null) => void
 }
 
 /**
@@ -29,6 +29,7 @@ export async function startAiCall(persona: Persona, target: CallTarget, h: Handl
       onUserTranscript: (d) => d.final && h.onLine({ who: 'you', text: d.text }),
       // each sentence arrives once when generated and again when spoken; keep the first
       onBotOutput: (d) => d.text_type === 'sentence' && d.spoken_status !== 'completed' && h.onLine({ who: 'ai', text: d.text }),
+      onBotLlmStarted: () => h.onSpeaking('thinking'),
       onBotStartedSpeaking: () => h.onSpeaking('ai'),
       onBotStoppedSpeaking: () => h.onSpeaking(null),
       onUserStartedSpeaking: () => h.onSpeaking('you'),
