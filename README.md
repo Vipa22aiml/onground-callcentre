@@ -6,7 +6,7 @@ A working rebuild of the On-Ground call-centre app: the screens from the mock, p
 - **AI to human:** an AI tele-caller ("Avani") calls you about the lead's product and holds a live voice conversation in English or Hindi. "Practise a call" flips it so the AI plays a hard-to-close shopper. After every AI call, Gemini writes a summary with outcome, sentiment and next step.
 - **No keys needed to try it:** the hosted call server holds the API keys. The browser never sees them.
 
-Demo video: _add link_ · Live site: _add link_
+**Live site: https://onground-callcentre.netlify.app** (Chrome, allow the microphone; the first AI call after idle can take up to a minute while the free voice server wakes up)
 
 ## Run it
 
